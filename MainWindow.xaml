@@ -1,0 +1,76 @@
+﻿<Window x:Class="ExamBank.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ExamBank"
+        xmlns:converter="clr-namespace:ExamBank"
+        mc:Ignorable="d"
+        Title="ExamBank" Height="450" Width="800" Closing="Window_Closing">
+    <Window.Resources>
+        <converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Grid.Column="0">ExamBank</Label>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <ListBox Grid.Row="1" x:Name="lstQuestions" MouseDoubleClick="lstQuestions_mouseDoubleClick">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="{Binding question}"/>
+                            <TextBlock Grid.Row="1" Text="{Binding answer}" Visibility="{Binding isAnswerVisible,Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+            </Grid>
+
+            <StackPanel Grid.Row="0" Grid.Column="1" Margin="5,0,0,0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="3*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Margin="0,5,0,0">question</TextBlock>
+                    <TextBox Margin="0,5,0,0" Grid.Column="1" x:Name="txtQuestion" AcceptsReturn="True" TextWrapping="Wrap"/>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="3*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Margin="0,5,0,0">answer</TextBlock>
+                    <TextBox Margin="0,5,0,0" Grid.Column="1" x:Name="txtAnswer" AcceptsReturn="True" TextWrapping="Wrap"/>
+                </Grid>
+
+                <Button x:Name="btnAdd" Margin="0,5,0,0" Click="btnAdd_Click">Add Quest</Button>
+                <Button x:Name="btnDel" Margin="0,5,0,0" Click="btnDel_Click">Del Quest</Button>
+                <!--<Button x:Name="btnsave" Margin="0,5,0,0" Click="btnSave_Click">Save Quest</Button>-->
+            </StackPanel>
+        </Grid>
+
+        <TextBlock Grid.Row="2" Margin="0,10,0,0">Logs</TextBlock>
+        <ListBox Grid.Row="3" Name="LogListBox" Margin="0,5,0,0"/>
+    </Grid>
+</Window>
